@@ -1,6 +1,7 @@
 #pragma once
 #include "frc/controller/PIDController.h"
-#include "PIDFRange.h"
+#include "yagsl/parser/deserializer/PIDFRange.h"
+
 namespace yagsl
 {
     class PIDFConfig

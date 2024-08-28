@@ -44,7 +44,7 @@ namespace yagsl
     bool AnalogAbsoluteEncoderSwerve::SetAbsoluteEncoderOffset(double offset)
     {
         cannotSetOffset.Set(true);
-        return false;
+        return true;
     }
 
     double AnalogAbsoluteEncoderSwerve::GetVelocity()

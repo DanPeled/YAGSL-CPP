@@ -1,45 +1,51 @@
-// #include "yagsl/encoders/CanAndCoderSwerve.h"
+#include "yagsl/encoders/CanAndCoderSwerve.h"
 
-// namespace yagsl
-// {
-//     CanAndCoderSwerve::CanAndCoderSwerve(int canid)
-//         : encoder(canid)
-//     {
-//     }
+namespace yagsl
+{
+    CanAndCoderSwerve::CanAndCoderSwerve(int canid)
+        : encoder(canid)
+    {
+    }
 
-//     void CanAndCoderSwerve::FactoryDefault()
-//     {
-//         encoder.resetFactoryDefaults(false);
-//     }
+    void CanAndCoderSwerve::FactoryDefault()
+    {
+        encoder.ResetFactoryDefaults(false);
+    }
 
-//     void CanAndCoderSwerve::ClearStickyFaults()
-//     {
-//         encoder.clearStickyFaults();
-//     }
+    void CanAndCoderSwerve::ClearStickyFaults()
+    {
+        encoder.ClearStickyFaults();
+    }
 
-//     void CanAndCoderSwerve::Configure(bool inverted)
-//     {
-//         encoder.setSettings(Canandcoder::Settings().setInvertDirection(inverted));
-//     }
+    void CanAndCoderSwerve::Configure(bool inverted)
+    {
+        redux::sensors::canandmag::CanandmagSettings settings{};
+        settings.SetInvertDirection(inverted);
+        encoder.SetSettings(settings);
+    }
 
-//     double CanAndCoderSwerve::GetAbsolutePosition() const
-//     {
-//         return encoder.getAbsPosition() * 360.0;
-//     }
+    double CanAndCoderSwerve::GetAbsolutePosition()
+    {
+        return encoder.GetAbsPosition().value() * 360.0;
+    }
 
-//     void *CanAndCoderSwerve::GetAbsoluteEncoder() const
-//     {
-//         return &encoder;
-//     }
+    void *CanAndCoderSwerve::GetAbsoluteEncoder() const
+    {
+        return (void *)&encoder;
+    }
 
-//     bool CanAndCoderSwerve::SetAbsoluteEncoderOffset(double offset)
-//     {
-//         return encoder.setSettings(Canandcoder::Settings().setZeroOffset(offset));
-//     }
+    bool CanAndCoderSwerve::SetAbsoluteEncoderOffset(double offset)
+    {
+        redux::sensors::canandmag::CanandmagSettings settings{};
+        settings.SetZeroOffset(units::turn_t{offset});
+        encoder.SetSettings(settings);
 
-//     double CanAndCoderSwerve::GetVelocity()
-//     {
-//         return encoder.getVelocity() * 360.0;
-//     }
+        return true;
+    }
 
-// } // namespace yagsl
+    double CanAndCoderSwerve::GetVelocity()
+    {
+        return encoder.GetVelocity().value() * 360.0;
+    }
+
+} // namespace yagsl

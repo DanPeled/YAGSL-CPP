@@ -61,13 +61,13 @@ namespace yagsl
 
     private:
         /** The SparkAnalogSensor representing the duty cycle encoder attached to the SparkMax analog port. */
-        rev::SparkAnalogSensor encoder;
+        rev::SparkAnalogSensor m_encoder;
 
         /** An Alert for if there is a failure configuring the encoder. */
-        Alert failureConfiguring;
+        Alert m_failureConfiguring;
 
         /** An Alert for if the absolute encoder does not support integrated offsets. */
-        Alert doesNotSupportIntegratedOffsets;
+        Alert m_doesNotSupportIntegratedOffsets;
 
         /**
          * Run the configuration until it succeeds or times out.

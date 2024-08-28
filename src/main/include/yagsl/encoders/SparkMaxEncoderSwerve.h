@@ -68,9 +68,9 @@ namespace yagsl
         double GetVelocity() override;
 
     private:
-        std::optional<rev::SparkMaxAbsoluteEncoder> encoder;
-        Alert failureConfiguring;
-        Alert offsetFailure;
+        std::optional<rev::SparkMaxAbsoluteEncoder> m_encoder;
+        Alert m_failureConfiguring;
+        Alert m_offsetFailure;
 
         /**
          * Run the configuration until it succeeds or times out.

@@ -70,10 +70,10 @@ namespace yagsl
     private:
         static const units::time::second_t STATUS_TIMEOUT_SECONDS;
 
-        ctre::phoenix6::hardware::CANcoder encoder;
-        Alert magnetFieldLessThanIdeal;
-        Alert readingFaulty;
-        Alert readingIgnored;
-        Alert cannotSetOffset;
+        ctre::phoenix6::hardware::CANcoder m_encoder;
+        Alert m_magnetFieldLessThanIdeal;
+        Alert m_readingFaulty;
+        Alert m_readingIgnored;
+        Alert m_cannotSetOffset;
     };
 } // namespace yagsl

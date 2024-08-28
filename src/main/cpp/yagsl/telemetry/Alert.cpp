@@ -9,7 +9,7 @@ Alert::Alert(const std::string &text, AlertType type)
     : Alert("Alerts", text, type) {}
 
 Alert::Alert(const std::string &group, const std::string &alertText, AlertType alertType)
-    : type(alertType), text(alertText)
+    : m_type(alertType), m_text(alertText)
 {
     if (groups.find(group) == groups.end())
     {
@@ -21,26 +21,26 @@ Alert::Alert(const std::string &group, const std::string &alertText, AlertType a
 
 void Alert::Set(bool active)
 {
-    if (active && !this->active)
+    if (active && !this->m_active)
     {
-        activeStartTime = frc::Timer::GetFPGATimestamp();
-        PrintAlert(text);
+        m_activeStartTime = frc::Timer::GetFPGATimestamp();
+        PrintAlert(m_text);
     }
-    this->active = active;
+    this->m_active = active;
 }
 
 void Alert::SetText(const std::string &text)
 {
-    if (active && text != this->text)
+    if (m_active && text != this->m_text)
     {
         PrintAlert(text);
     }
-    this->text = text;
+    this->m_text = text;
 }
 
 void Alert::PrintAlert(const std::string &text) const
 {
-    switch (type)
+    switch (m_type)
     {
     case AlertType::ERROR:
         frc::ReportError(
@@ -69,9 +69,9 @@ std::vector<std::string> Alert::SendableAlerts::GetStrings(AlertType type) const
     std::vector<std::string> alertStrings;
     for (const auto &alert : alerts)
     {
-        if (alert->type == type && alert->active)
+        if (alert->m_type == type && alert->m_active)
         {
-            alertStrings.push_back(alert->text);
+            alertStrings.push_back(alert->m_text);
         }
     }
     return alertStrings;

@@ -61,13 +61,13 @@ namespace yagsl
 
     private:
         /** Duty Cycle Encoder. */
-        frc::DutyCycleEncoder *encoder;
+        frc::DutyCycleEncoder *m_encoder;
         /** Inversion state. */
-        bool isInverted;
+        bool m_isInverted;
         /** An Alert for if the encoder cannot report accurate velocities. */
-        Alert inaccurateVelocities;
+        Alert m_inaccurateVelocities;
         /** The Offset in degrees of the PWM absolute encoder. */
-        double offset;
+        double m_offset;
     };
 
 } // namespace yagsl

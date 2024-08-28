@@ -5,27 +5,27 @@ const units::time::second_t yagsl::CANCoderSwerve::STATUS_TIMEOUT_SECONDS{0.02};
 namespace yagsl
 {
     CANCoderSwerve::CANCoderSwerve(int id, const std::string &canbus)
-        : encoder{id, canbus},
-          magnetFieldLessThanIdeal("Encoders", fmt::format("CANCoder {} magnetic field is less than ideal.", id), Alert::AlertType::WARNING),
-          readingFaulty("Encoders", fmt::format("CANCoder {} reading was faulty.", id), Alert::AlertType::WARNING),
-          readingIgnored("Encoders", fmt::format("CANCoder {} reading was faulty, ignoring.", id), Alert::AlertType::WARNING),
-          cannotSetOffset("Encoders", fmt::format("Failure to set CANCoder {} Absolute Encoder Offset", id), Alert::AlertType::WARNING)
+        : m_encoder{id, canbus},
+          m_magnetFieldLessThanIdeal("Encoders", fmt::format("CANCoder {} magnetic field is less than ideal.", id), Alert::AlertType::WARNING),
+          m_readingFaulty("Encoders", fmt::format("CANCoder {} reading was faulty.", id), Alert::AlertType::WARNING),
+          m_readingIgnored("Encoders", fmt::format("CANCoder {} reading was faulty, ignoring.", id), Alert::AlertType::WARNING),
+          m_cannotSetOffset("Encoders", fmt::format("Failure to set CANCoder {} Absolute Encoder Offset", id), Alert::AlertType::WARNING)
     {
     }
 
     void CANCoderSwerve::FactoryDefault()
     {
-        encoder.GetConfigurator().Apply(ctre::phoenix6::configs::CANcoderConfiguration());
+        m_encoder.GetConfigurator().Apply(ctre::phoenix6::configs::CANcoderConfiguration());
     }
 
     void CANCoderSwerve::ClearStickyFaults()
     {
-        encoder.ClearStickyFaults();
+        m_encoder.ClearStickyFaults();
     }
 
     void CANCoderSwerve::Configure(bool inverted)
     {
-        auto &cfg = encoder.GetConfigurator();
+        auto &cfg = m_encoder.GetConfigurator();
         auto magnetSensorConfiguration = ctre::phoenix6::configs::MagnetSensorConfigs();
         cfg.Refresh(magnetSensorConfiguration);
         cfg.Apply(
@@ -38,21 +38,21 @@ namespace yagsl
     double CANCoderSwerve::GetAbsolutePosition()
     {
         readingError = false;
-        auto strength = encoder.GetMagnetHealth().GetValue();
+        auto strength = m_encoder.GetMagnetHealth().GetValue();
 
-        magnetFieldLessThanIdeal.Set(strength != ctre::phoenix6::signals::MagnetHealthValue::Magnet_Green);
+        m_magnetFieldLessThanIdeal.Set(strength != ctre::phoenix6::signals::MagnetHealthValue::Magnet_Green);
         if (strength == ctre::phoenix6::signals::MagnetHealthValue::Magnet_Invalid || strength == ctre::phoenix6::signals::MagnetHealthValue::Magnet_Red)
         {
             readingError = true;
-            readingFaulty.Set(true);
+            m_readingFaulty.Set(true);
             return 0;
         }
         else
         {
-            readingFaulty.Set(false);
+            m_readingFaulty.Set(false);
         }
 
-        auto angle = encoder.GetAbsolutePosition();
+        auto angle = m_encoder.GetAbsolutePosition();
 
         for (int i = 0; i < maximumRetries; ++i)
         {
@@ -66,12 +66,12 @@ namespace yagsl
         if (angle.GetStatus() != ctre::phoenix::StatusCode::OK)
         {
             readingError = true;
-            readingIgnored.Set(true);
+            m_readingIgnored.Set(true);
             return 0;
         }
         else
         {
-            readingIgnored.Set(false);
+            m_readingIgnored.Set(false);
         }
 
         return angle.GetValue().value() * 360;
@@ -79,12 +79,12 @@ namespace yagsl
 
     void *CANCoderSwerve::GetAbsoluteEncoder() const
     {
-        return (void *)&encoder;
+        return (void *)&m_encoder;
     }
 
     bool CANCoderSwerve::SetAbsoluteEncoderOffset(double offset)
     {
-        auto &cfg = encoder.GetConfigurator();
+        auto &cfg = m_encoder.GetConfigurator();
         auto magCfg = ctre::phoenix6::configs::MagnetSensorConfigs();
         auto error = cfg.Refresh(magCfg);
         if (error != ctre::phoenix::StatusCode::OK)
@@ -92,18 +92,18 @@ namespace yagsl
             return false;
         }
         error = cfg.Apply(magCfg.WithMagnetOffset(offset / 360));
-        cannotSetOffset.SetText(std::string("Failure to set CANCoder ") + std::to_string(encoder.GetDeviceID()) + std::string("Absolute Encoder Offset Error: ") + std::to_string(error));
+        m_cannotSetOffset.SetText(std::string("Failure to set CANCoder ") + std::to_string(m_encoder.GetDeviceID()) + std::string("Absolute Encoder Offset Error: ") + std::to_string(error));
         if (error == ctre::phoenix::StatusCode::OK)
         {
-            cannotSetOffset.Set(false);
+            m_cannotSetOffset.Set(false);
             return true;
         }
-        cannotSetOffset.Set(true);
+        m_cannotSetOffset.Set(true);
         return false;
     }
 
     double CANCoderSwerve::GetVelocity()
     {
-        return encoder.GetVelocity().GetValue().value() * 360;
+        return m_encoder.GetVelocity().GetValue().value() * 360;
     }
 }

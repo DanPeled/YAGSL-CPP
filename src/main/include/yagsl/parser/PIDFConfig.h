@@ -63,4 +63,4 @@ namespace yagsl
             return frc::PIDController(p, i, d);
         }
     };
-}
+} // namespace yagsl

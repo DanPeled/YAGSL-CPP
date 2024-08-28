@@ -74,10 +74,10 @@ namespace yagsl
         double GetVelocity() override;
 
     private:
-        frc::AnalogInput *encoder;
-        bool inverted = false;
-        Alert cannotSetOffset;
-        Alert inaccurateVelocities;
+        frc::AnalogInput *m_encoder;
+        bool m_inverted = false;
+        Alert m_cannotSetOffset;
+        Alert m_inaccurateVelocities;
     };
 
 } // namespace yagsl

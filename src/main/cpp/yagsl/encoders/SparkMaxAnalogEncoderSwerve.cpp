@@ -4,9 +4,9 @@ namespace yagsl
 {
 
     SparkMaxAnalogEncoderSwerve::SparkMaxAnalogEncoderSwerve(rev::CANSparkMax *motor)
-        : encoder(motor->GetAnalog(rev::SparkAnalogSensor::Mode::kAbsolute)),
-          failureConfiguring("Encoders", "Failure configuring SparkMax Analog Encoder", Alert::AlertType::WARNING_TRACE),
-          doesNotSupportIntegratedOffsets("Encoders", "SparkMax Analog Sensors do not support integrated offsets", Alert::AlertType::WARNING_TRACE)
+        : m_encoder(motor->GetAnalog(rev::SparkAnalogSensor::Mode::kAbsolute)),
+          m_failureConfiguring("Encoders", "Failure configuring SparkMax Analog Encoder", Alert::AlertType::WARNING_TRACE),
+          m_doesNotSupportIntegratedOffsets("Encoders", "SparkMax Analog Sensors do not support integrated offsets", Alert::AlertType::WARNING_TRACE)
     {
     }
 
@@ -22,28 +22,28 @@ namespace yagsl
 
     void SparkMaxAnalogEncoderSwerve::Configure(bool inverted)
     {
-        encoder.SetInverted(inverted);
+        m_encoder.SetInverted(inverted);
     }
 
     double SparkMaxAnalogEncoderSwerve::GetAbsolutePosition()
     {
-        return encoder.GetPosition();
+        return m_encoder.GetPosition();
     }
 
     void *SparkMaxAnalogEncoderSwerve::GetAbsoluteEncoder() const
     {
-        return (void *)&encoder;
+        return (void *)&m_encoder;
     }
 
     bool SparkMaxAnalogEncoderSwerve::SetAbsoluteEncoderOffset(double offset)
     {
-        doesNotSupportIntegratedOffsets.Set(true);
+        m_doesNotSupportIntegratedOffsets.Set(true);
         return false; // SparkMax Analog Sensors do not support integrated offsets
     }
 
     double SparkMaxAnalogEncoderSwerve::GetVelocity()
     {
-        return encoder.GetVelocity();
+        return m_encoder.GetVelocity();
     }
 
     void SparkMaxAnalogEncoderSwerve::ConfigureSparkMax(std::function<rev::REVLibError()> config)
@@ -55,7 +55,7 @@ namespace yagsl
                 return;
             }
         }
-        failureConfiguring.Set(true);
+        m_failureConfiguring.Set(true);
     }
 
 } // namespace yagsl

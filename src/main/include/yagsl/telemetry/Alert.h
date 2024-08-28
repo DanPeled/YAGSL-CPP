@@ -86,14 +86,14 @@ private:
     static std::map<std::string, std::shared_ptr<SendableAlerts>> groups;
 
     /** Type of the Alert to raise. */
-    const AlertType type;
+    const AlertType m_type;
 
     /** Activation state of alert. */
-    bool active = false;
+    bool m_active = false;
 
     /** When the alert was raised. */
-    units::time::second_t activeStartTime = units::time::second_t(0.0);
+    units::time::second_t m_activeStartTime = units::time::second_t(0.0);
 
     /** Text of the alert. */
-    std::string text;
+    std::string m_text;
 };

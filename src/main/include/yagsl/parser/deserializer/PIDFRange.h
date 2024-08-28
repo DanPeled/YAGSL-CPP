@@ -1,3 +1,5 @@
+#pragma once
+
 namespace yagsl
 {
     /** Integral zone of the PID. */

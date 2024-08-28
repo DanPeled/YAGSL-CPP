@@ -65,7 +65,7 @@ namespace yagsl
         double GetVelocity() override;
 
     private:
-        redux::sensors::canandmag::Canandmag encoder;
+        redux::sensors::canandmag::Canandmag m_encoder;
     };
 
 } // namespace yagsl

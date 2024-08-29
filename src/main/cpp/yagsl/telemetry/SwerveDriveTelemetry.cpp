@@ -18,8 +18,19 @@ namespace yagsl
 
     bool SwerveDriveTelemetry::isSimulation = frc::RobotBase::IsSimulation();
 
+    std::size_t SwerveDriveTelemetry::moduleCount = 0;
+    std::span<const double> SwerveDriveTelemetry::wheelLocations;
+    std::span<const double> SwerveDriveTelemetry::measuredStates;
+    std::span<const double> SwerveDriveTelemetry::desiredStates;
+    double SwerveDriveTelemetry::robotRotation = 0.0;
+    double SwerveDriveTelemetry::maxSpeed = 0.0;
     std::string SwerveDriveTelemetry::rotationUnit = "degrees";
+    double SwerveDriveTelemetry::sizeLeftRight = 0.0;
+    double SwerveDriveTelemetry::sizeFrontBack = 0.0;
     std::string SwerveDriveTelemetry::forwardDirection = "up";
+    double SwerveDriveTelemetry::maxAngularVelocity = 0.0;
+    std::array<double, 3> SwerveDriveTelemetry::measuredChassisSpeeds = {0.0, 0.0, 0.0};
+    std::array<double, 3> SwerveDriveTelemetry::desiredChassisSpeeds = {0.0, 0.0, 0.0};
 
     void SwerveDriveTelemetry::UpdateData()
     {

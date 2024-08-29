@@ -1,3 +1,5 @@
+#pragma once
+
 #include <frc/Timer.h>
 
 #include <frc/geometry/Rotation3d.h>

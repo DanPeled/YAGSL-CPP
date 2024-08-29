@@ -3,6 +3,7 @@
 #include <memory>
 #include "yagsl/encoders/SwerveAbsoluteEncoder.h"
 #include "yagsl/parser/PIDFConfig.h"
+#include <units/voltage.h>
 
 namespace yagsl
 {
@@ -38,7 +39,7 @@ namespace yagsl
          * @param encoder The encoder to use.
          * @return The SwerveMotor instance for single line configuration.
          */
-        virtual SwerveMotor &SetAbsoluteEncoder(std::shared_ptr<SwerveAbsoluteEncoder> encoder) = 0;
+        virtual SwerveMotor *SetAbsoluteEncoder(std::shared_ptr<SwerveAbsoluteEncoder> encoder) = 0;
 
         /**
          * Configure the integrated encoder for the swerve module. Sets the conversion factors for
@@ -111,14 +112,14 @@ namespace yagsl
          *
          * @return Voltage output.
          */
-        virtual double GetVoltage() const = 0;
+        virtual units::voltage::volt_t GetVoltage() const = 0;
 
         /**
          * Set the voltage of the motor.
          *
          * @param voltage Voltage to set.
          */
-        virtual void SetVoltage(double voltage) = 0;
+        virtual void SetVoltage(units::voltage::volt_t voltage) = 0;
 
         /**
          * Get the applied duty cycle output.

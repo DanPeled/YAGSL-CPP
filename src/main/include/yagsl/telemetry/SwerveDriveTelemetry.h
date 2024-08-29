@@ -40,7 +40,7 @@ namespace yagsl
         /** State of simulation of the Robot, used to optimize retrieval. */
         static bool isSimulation;
         /** The number of swerve modules */
-        static int moduleCount;
+        static std::size_t moduleCount;
         /** The locations of the swerve modules */
         static std::span<const double> wheelLocations;
         /**

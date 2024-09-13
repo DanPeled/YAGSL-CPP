@@ -4,6 +4,8 @@
 #include "yagsl/encoders/SwerveAbsoluteEncoder.h"
 #include "yagsl/parser/PIDFConfig.h"
 #include <units/voltage.h>
+#include <units/angular_velocity.h>
+#include <units/velocity.h>
 
 namespace yagsl
 {
@@ -96,7 +98,7 @@ namespace yagsl
          * @param setpoint Setpoint in meters per second or angle in degrees.
          * @param feedforward Feedforward in volt-meter-per-second or kV.
          */
-        virtual void SetReference(double setpoint, double feedforward) = 0;
+        virtual void SetReference(double setpoint, units::voltage::volt_t feedforward) = 0;
 
         /**
          * Set the closed-loop PID controller reference point.
@@ -105,7 +107,7 @@ namespace yagsl
          * @param feedforward Feedforward in volt-meter-per-second or kV.
          * @param position Only used on the angle motor, the position of the motor in degrees.
          */
-        virtual void SetReference(double setpoint, double feedforward, double position) = 0;
+        virtual void SetReference(double setpoint, units::voltage::volt_t feedforward, units::angle::degree_t position) = 0;
 
         /**
          * Get the voltage output of the motor controller.
@@ -126,35 +128,35 @@ namespace yagsl
          *
          * @return Applied duty cycle output to the motor.
          */
-        virtual double GetAppliedOutput() const = 0;
+        virtual units::dimensionless::scalar_t GetAppliedOutput() const = 0;
 
         /**
          * Get the velocity of the integrated encoder.
          *
          * @return Velocity in meters per second or degrees per second.
          */
-        virtual double GetVelocity() const = 0;
+        virtual units::angular_velocity::turns_per_second_t GetVelocity() const = 0;
 
         /**
          * Get the position of the integrated encoder.
          *
          * @return Position in meters or degrees.
          */
-        virtual double GetPosition() const = 0;
+        virtual units::angle::turn_t GetPosition() const = 0;
 
         /**
          * Set the integrated encoder position.
          *
          * @param position Integrated encoder position. Should be angle in degrees or meters per second.
          */
-        virtual void SetPosition(double position) = 0;
+        virtual void SetPosition(units::angle::turn_t position) = 0;
 
         /**
          * Set the voltage compensation for the swerve module motor.
          *
          * @param nominalVoltage Nominal voltage for operation to output to.
          */
-        virtual void SetVoltageCompensation(double nominalVoltage) = 0;
+        virtual void SetVoltageCompensation(units::voltage::volt_t nominalVoltage) = 0;
 
         /**
          * Set the current limit for the swerve drive motor, remember this may cause jumping if used in

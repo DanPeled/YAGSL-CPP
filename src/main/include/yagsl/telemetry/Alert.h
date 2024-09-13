@@ -25,7 +25,9 @@ public:
         WARNING_TRACE,
         INFO
     };
-
+    
+    Alert();
+    
     /**
      * Creates a new Alert in the default group - "Alerts". If this is the first to be instantiated,
      * the appropriate entries will be added to NetworkTables.

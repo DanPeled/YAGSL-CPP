@@ -32,7 +32,7 @@ namespace yagsl
          * @param canbus CANBus on which the TalonFX is on.
          * @param isDriveMotor Whether the motor is a drive or steering motor.
          */
-        TalonFXSwerve(int id, std::string canbus = "", bool isDriveMotor);
+        TalonFXSwerve(int id, std::string canbus, bool isDriveMotor);
         /**
          * Construct the TalonFX swerve motor given the ID.
          *

@@ -5,6 +5,8 @@
 // Initialize static member
 std::map<std::string, std::shared_ptr<Alert::SendableAlerts>> Alert::groups;
 
+Alert::Alert() : Alert("", "", AlertType::ERROR) {}
+
 Alert::Alert(const std::string &text, AlertType type)
     : Alert("Alerts", text, type) {}
 

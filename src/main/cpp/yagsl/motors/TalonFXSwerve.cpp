@@ -9,7 +9,7 @@ namespace yagsl
         ClearStickyFaults();
     }
 
-    TalonFXSwerve::TalonFXSwerve(int id, std::string canbus = "", bool isDriveMotor) : TalonFXSwerve(std::make_shared<ctre::phoenix6::hardware::TalonFX>(id, canbus), isDriveMotor)
+    TalonFXSwerve::TalonFXSwerve(int id, std::string canbus, bool isDriveMotor) : TalonFXSwerve(std::make_shared<ctre::phoenix6::hardware::TalonFX>(id, canbus), isDriveMotor)
     {
     }
 

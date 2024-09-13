@@ -99,7 +99,7 @@ namespace yagsl
         // https://v5.docs.ctr-electronics.com/en/stable/ch18_CommonAPI.html#setting-status-frame-periods
     }
 
-    void TalonFXSwerve::ConfigurePIDF(const PIDFConfig &config)
+    void TalonFXSwerve::ConfigurePIDF(const parser::PIDFConfig &config)
     {
         ctre::phoenix6::configs::TalonFXConfigurator &cfg = m_motor.get()->GetConfigurator();
         cfg.Refresh(m_configuration.Slot0);

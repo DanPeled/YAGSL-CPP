@@ -56,7 +56,7 @@ namespace yagsl
          *
          * @param config Configuration class holding the PIDF values.
          */
-        virtual void ConfigurePIDF(const PIDFConfig &config) = 0;
+        virtual void ConfigurePIDF(const parser::PIDFConfig &config) = 0;
 
         /**
          * Configure the PID wrapping for the position closed-loop controller.

@@ -2,7 +2,7 @@
 #include "frc/controller/PIDController.h"
 #include "yagsl/parser/deserializer/PIDFRange.h"
 
-namespace yagsl
+namespace yagsl::parser
 {
     class PIDFConfig
     {
@@ -18,7 +18,7 @@ namespace yagsl
         /** Integral zone of the PID. */
         double iz;
 
-        PIDFRange output;
+        parser::PIDFRange output;
 
         /**
          * PIDF Config constructor to contain the values.

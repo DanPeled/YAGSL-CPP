@@ -1,6 +1,6 @@
 #pragma once
 
-namespace yagsl
+namespace yagsl::parser
 {
     /** Integral zone of the PID. */
     struct PIDFRange
